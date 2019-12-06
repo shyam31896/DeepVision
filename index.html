@@ -37,21 +37,15 @@
           <br>
           Ever thought about how good a piece of furniture would look in your desired space before actually buying it? 
           <br><br>
-          We help you in figuring that out by trying to reconstruct 3D models of furniture just from a single 2D image 
-          and you can see how well it fits in the environment of your choice with the help of an Augmented Reality (AR)
-          application on your device.
+          We help you in figuring that out by reconstructing 3D models of furniture just from a single 2D image and you 
+          can visualize how well it fits in your environment with the help of an Augmented Reality (AR) application on 
+          your device.
           <br>
           <br>
-          In this project, we build and examine two different approaches to reach our goal, namely, Model-Free approach which 
-          incorporates humongous amount of computational power in reconstructing a 3D model, and the other one is a Model-Based 
-          approach which overcomes this challenge in producing the results.
-
-          <!--           
-          One of the main challenges with deep learning based 3D reconstruction is the 
-          power that is needed to construct the 3D model during inference. In project DeepVision, we build and examine 
-          model-free and model-based deep learning models for 3D reconstruction and compare their relative performance. 
-          -->
-
+          In this project, we build and examine model-free and model-based deep learning methods for 3D reconstruction. 
+          In Model Free approach, the reconstruction is done directly in 128*128*128 voxel space making it computationally 
+          expensive. Whereas in Model based method, we used a pre-computed parametric shape representation to decrease 
+          computational requirements. We compare the performances of both these models and discuss the trade-offs.
           <br>
           <br>
           Let’s dive in!
@@ -72,44 +66,43 @@
           <p style="text-align: center;font-size: 14px;">Figure [1]</p>
         </div>
         <p id="para"> 
-          3D Reconstruction of Objects from 2D images is a fundamental problem in the field of Computer Vision. 
-          Traditionally, multiple 2D images with different views are used to solve this reconstruction problem. 
-          These multiple views provide us with the extra information that can be used to solve this problem. This 
-          problem is more challenging if the reconstruction has to be done from just a single 2D image. Recent 
-          advances in the field of Deep Learning seems to have a solution for this problem. 
+          Traditionally, multiple 2D images with different views provide us with the extra information that can be used to 
+          solve this reconstruction problem. This problem is more challenging if the reconstruction has to be done from 
+          just a single 2D image. We can tackle this problem by leveraging deep learning techniques. 
         </p>
         <div class="center" id="priors">
           <img src="Blog/images/np1.png" alt="prior_est">
-          <p style="text-align: center;font-size: 14px;">Figure [2]</p>
+          <p style="text-align: center;font-size: 14px;">Figure [2] : 2.5D Sketch Estimation Network</p>
         </div>
         <p id="para">
-          In our framework, we first train a 2.5D sketch estimation network that takes in a 2D image and predicts 
-          the prior knowledge required for 3D reconstruction. The outputs of this network are called 2.5D images 
-          and comprises of Depth image, Surface Normal Image and a Silhouette Image. It is a Resnet18 based encoder 
-          - decoder architecture with Mean Square Error as the Loss Function. 
+          In our framework shown in Figure [1], we first train a 2.5D sketch estimation network that takes in a 2D image and predicts the 
+          prior knowledge required for 3D reconstruction. The outputs of this network are 2.5D images and comprises of 
+          Depth image, Surface Normal Image and a Silhouette Image. It is a ResNet18 based encoder - decoder architecture 
+          with Mean Squared Error as the Loss Function. 
         </p>
         <div class="center" id="priors">
           <img src="Blog/images/np2.png" alt="prior_est">
-          <p style="text-align: center;font-size: 14px;">Figure [3]</p>
+          <p style="text-align: center;font-size: 14px;">Figure [3] : 3D Shape completion network</p>
         </div>
         <p id="para">
-          These 2.5D images are fed into a Shape Completion Network that reconstructs the 3D object in 128*128*128 
-          voxel space. This is also a Resnet18 based architecture with Binary Cross Entropy as the loss function.
-          Both of these networks are trained independently using a custom dataset which contains the rendered 2D images
-          from ShapeNet and Pix3D. These images have a corresponding 2.5D images and 3D models to facilitate 
-          supervised learning.
+          These 2.5D images are fed into a Shape Completion Network that reconstructs the 3D object in 128*128*128 voxel space. 
+          This is also a ResNet18 based architecture with Binary Cross Entropy as the loss function. Both of these networks are 
+          trained independently using a custom dataset which contains synthetically rendered 2D images from ShapeNet and Pix3D. 
+          These images have a corresponding 2.5D images and 3D models to facilitate supervised learning. This synthetic data 
+          provides us additional viewpoints to solve the problem of less training data.
           <br><br>
-          Since, the networks are trained on rendered images, it is necessary to observe its performance on real images 
-          that have different lighting conditions. One key contribution is to compare the performance of the model Real-world 
-          Images and Synthetic Rendered Images. We take the real world images from Extended IKEA dataset. 
+          Since, the networks are trained on rendered images, it is necessary to observe its performance on real images that 
+          have different lighting conditions. One key contribution is to compare the performance of the model on real-world 
+          images and synthetically rendered images. We take the real world images from Extended IKEA dataset. 
         </p>
       </div>
       <div class="section">
         <h5 id="nparam_results" class="center" style="color:#00838f;font-weight: lighter;">Results</h5>
+        <p id="para">The results below show the input 2D images with the predicted 2.5D images and reconstructed 3D models with two views.</p>
       </div>
       <div class="center" id="nparamres">
         <img src="Blog/images/np3.png" alt="pres1">
-        <p style="text-align: center;font-size: 14px;">Figure [4]</p>
+        <p style="text-align: center;font-size: 14px;">Figure [4] : Output of synthetic image</p>
         <p id="para">
           In Figure [4], we can see that our network tries to learn different features of a chair like “Handles” for the 
           given 2D synthetic image.
@@ -117,18 +110,18 @@
       </div>
       <div class="center" id="nparamres">
         <img src="Blog/images/np4.png" alt="pres2">
-        <p style="text-align: center;font-size: 14px;">Figure [5]</p>
+        <p style="text-align: center;font-size: 14px;">Figure [5] : Output of real image</p>
         <p id="para">
-          In Figure [5], input image is a real image which has a non uniform lighting. We can see that lighting has an 
-          effect on the 2.5D images, particularly silhouette and  normal images are distorted.
+          In Figure [5], input image is a real image which has a non-uniform lighting. We can see that lighting has an effect
+          on the 2.5D images, particularly silhouette and  normal images are distorted.
         </p>
       </div>
       <div class="center" id="nparamres">
         <img src="Blog/images/np5.png" alt="pres3">
-        <p style="text-align: center;font-size: 14px;">Figure [6]</p>
+        <p style="text-align: center;font-size: 14px;">Figure [6] : Output of real image - failed case</p>
         <p id="para">
           Figure [6] is one of the failed cases we observed in our experiments. In this case, 2.5D predictions are distorted, 
-          resulting in an imperfect 3D reconstruction. This can be because background and chairs are of the same colour.
+          resulting in an imperfect 3D reconstruction. This can be because the background and chairs are of the same colour. 
         </p>
       </div>
     </div>
@@ -141,30 +134,24 @@
       </div>
       <p id="para">
         In the previous approach, the network predicts 128*128*128 points in voxel space. Training the network to 
-        predict the points in such a huge voxel space is both time consuming and computationally intensive. Hence, 
-        we trained a model-based pipeline to reduce both training time and computational power needed for 3D reconstruction. 
+        predict such a huge voxel space is both time consuming and computationally intensive. Hence, we trained a 
+        model-based pipeline to reduce both training time and computational power needed for 3D reconstruction. 
       </p>
       <br>
       <div class="center" id="modelbasedpp">
         <img src="Blog/images/pipeline.png" alt="model-based pipeline">
-        <p style="text-align: center;font-size: 14px;">Figure [6]</p>
+        <p style="text-align: center;font-size: 14px;">Figure [7] : Model-based approach pipeline</p>
       </div>
       <br>
       <div>
         <p id="para">
-          In this approach, a computational model is employed, that can learn to infer a 3D representation of the object 
-          given a single RGB image. Learning of the model relies on an image collection of objects comprising of RGB images 
-          and ground truth 3D models.
+          In this approach, the shape is parameterized by a base model and per-instance deformations are calculated 
+          from the base model. In order to calculate these deformations, Iterative Closest Point (ICP) algorithm is 
+          employed to estimate the best alignment of two point-clouds (both point to point and point to plane).
           <br><br>
-          The shape is parameterized by a base model and per-instance calculated deformation from the base model. In order 
-          to calculate these deformations, Iterative Closest Point (ICP) algorithm is employed to estimate the best alignment
-          of two point-clouds (both point to point and point to plane) by finding the nearest neighbor in the base model for 
-          every point in the set of vertices of the instance object.
-          <br><br>
-          Applying ICP on the vertices of the training objects is quite challenging, as the Ground Truth 3D meshes 
-          are not uniform. They have varied number of vertices, edges, and faces. Therefore, it is imperative that the 
-          meshes are down-sampled so that all the training 3D meshes have more or less the same number of vertices before
-          running the ICP algorithm on them. Down-sampling the vertices was done manually on Blender.  
+          Applying ICP on the vertices of the training objects is quite challenging. As the ground truth 3D meshes
+           have varied number of vertices, edges, and faces, meshes are down-sampled so that all the training 3D 
+           meshes have the same number of vertices. Down-sampling the vertices was done manually on Blender.  
           <br><br>
           Now that we have one-to-one correspondence between all the vertices, the vertices are flattened and the 
           deformations are calculated as given below:
@@ -181,32 +168,33 @@
           <br><br>
           <div class="center scrollspy" id="fig7">
             <img src="Blog/images/param1.png" alt="param1">
-            <p class="scrollspy" style="text-align: center;font-size: 14px;">Figure [7]</p>
+            <p class="scrollspy" style="text-align: center;font-size: 14px;">Figure [8]</p>
           </div>
         </p>
         <p id="para">
           <br>
-          Thus, we can get the deformation coefficients of every training model by taking pseudo-inverse of the deformation 
-          matrix and pre-multiplying it by deformation.
+          Thus, we can get the deformation coefficients of every training model by taking pseudo-inverse 
+          of the deformation matrix and multiplying it with deformation.
           <br><br>
           <div class="center" id="fig2">
             <img src="Blog/images/param2.png" alt="param2">
-            <p style="text-align: center;font-size: 14px;">Figure [8]</p>
-          </div>
-        </p>
-        <p id="para">
-          <br>
-          We will use these coefficients for training our CNN architecture.
-          <br><br>
-          <div class="center" id="fig3">
-            <img src="Blog/images/param3.png" alt="param3">
             <p style="text-align: center;font-size: 14px;">Figure [9]</p>
           </div>
         </p>
         <p id="para">
           <br>
+          For a new 2D image, these deformation coefficients are predicted using a trained CNNs. Training 
+          the CNN is done in a supervised way with mean squared error as the loss function.
+          <br><br>
+          <div class="center" id="fig3">
+            <img src="Blog/images/param3.png" alt="param3">
+            <p style="text-align: center;font-size: 14px;">Figure [10]</p>
+          </div>
+        </p>
+        <p id="para">
+          <br>
           Now that our model predicts the deformation coefficients, we can get instant specific deformation by simple 
-          matrix multiplication as shown in Figure <a href="#fig7">[7]</a>. We will get our final predicted shape by adding these Deformations 
+          matrix multiplication as shown in Figure <a href="#fig7">[8]</a>. We will get our final predicted shape by adding these Deformations 
           to Base Vertices.
           <br>
         </p>
@@ -217,20 +205,20 @@
         </div>
         <div class="center" id="paramres">
           <img src="Blog/images/pres1.jpg" alt="pres1">
-          <p style="text-align: center;font-size: 14px;">Figure [10]</p>
+          <p style="text-align: center;font-size: 14px;">Figure [11]</p>
           <p id="para">
-            Here we see, by adding relevant deformations to the Base Model, we predict the output 3D shape. The 
-            predicted output is very close to the ground truth model. It is even trying to learn the curvature along
-            the side to an extent and also trying to fill in the gap which our base model had. Also it is trying to 
-            eliminate the extra support that legs of out base model had. But the outcome is noisy. Given we had to 
-            predict only 15 coefficients, the pipeline does an excellent work of predicting 3D models.
+              Here we see, by adding relevant deformations to the Base Model, we predict the output 3D shape. 
+              The predicted output is very close to the ground truth model. It is trying to learn the curvature 
+              along the side to an extent and also trying to fill in the gap which our base model had. Also it is 
+              trying to eliminate the extra support of base model’s legs. But the outcome is noisy. Given we had to 
+              predict only 15 coefficients, the pipeline does an excellent work of predicting 3D models.
             <br><br>
             Below, let us have a look at how our model learns the deformation.
           </p>
         </div>
         <div class="center" id="paramres">
           <img src="Blog/images/pres2.jpg" alt="pres2">
-          <p style="text-align: center;font-size: 14px;">Figure [11]</p>
+          <p style="text-align: center;font-size: 14px;">Figure [12]</p>
           <p id="para">
             Here we see, how our model is trying to learn deformations and transforming from Base Model to Ground Truth. 
             The principal direction explains 59.19% of the variance in deformation. To see the transformation that our 
@@ -242,12 +230,12 @@
           <br>
           <h5 class="center" style="color:#00838f;font-weight: lighter;">Limitations</h5>
           <img src="Blog/images/pres5.jpg" alt="pres3">
-          <p style="text-align: center;font-size: 14px;">Figure [12]</p>
+          <p style="text-align: center;font-size: 14px;">Figure [13]</p>
           <p id="para">
-            Here, our ground truth model, is relatively different from the base model, hence we see, even though it is 
-            trying to learn the deformation, the resulting noise is too high in the final predicted shape. Hence, we see 
-            even though it is computational cheap, but the results heavily depend on the base model that we choose. Thus, 
-            this approach does not generalizes well.
+            Here, our ground truth model is relatively different from the base model and hence we see, 
+            even though it is trying to learn the deformation, the resulting noise is too high in the 
+            final predicted shape. Hence, even though it is computationally cheap, the results heavily 
+            depend on the base model that we choose. 
           </p>
         </div>
       </div>
@@ -261,7 +249,7 @@
         <div id="comp">
           <img src="Blog/images/pres4.jpg" alt="pres4">
         </div>
-        <p style="text-align: center;font-size: 14px;">Figure [13]</p>
+        <p style="text-align: center;font-size: 14px;">Figure [14]</p>
         <p id="para">
           For real-world testing, we test our approaches with a real 2D image of a chair. The model-free approach 
           constructs the shape of chair but fails to capture the specific features such as thickness. This can be 
@@ -275,17 +263,50 @@
           <br><br>
           Life comes with trade-offs! :)
         </p>
+        <br>
       </div>
     </div>
   </div>
+
+  <div class="container scrollspy" style="text-align:center;" id="demo">
+    <div>
+      <h4 style="font-weight: 200;color: #2eadad;">Demo</h4>
+    </div>
+    <br>
+    <div>
+      <video width="30%" controls>
+        <source src="videos/demo_video.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+      </video>
+    </div>
+  </div> 
   
+  <div class="container">
+    <div class="container scrollspy" id="further">
+      <br>
+      <div class="section">
+        <h4 class="center" style="color:#00838f;font-weight: lighter;">Scope for Improvement</h4>
+      </div>
+      <div>
+        <p style="font-size: larger;">
+          <li style="font-size: larger;">Choosing a better base model by computing a mean model that generalizes well for specific object categories.</li>
+          <br><br>
+          <li style="font-size: larger;">Employing a Generative Adversarial Network (GAN) for improving the naturalness of the generated object surfaces.</li>
+          <br><br>
+          <li style="font-size: larger;">Adding texture to the generated object shapes using style transfer techniques.</li>
+        </p>
+      </div>
+    </div>
+  </div>
+
   <div class="container scrollspy" id="code">
+    <br>
     <div class="section">
       <h4 id="code" class="center" style="color:#00838f;font-weight: lighter;">Code</h4>
     </div>
     <div class="center">
       <p style="font-size: larger;">
-        You can find the code for our project <a href="https://github.com/sumanthpk/DeepVision" id="thanks">here</a>
+        You can find the code for our project <a href="https://github.com/shyam31896/DeepVision" id="thanks">here</a>
       </p>
     </div>
   </div>
@@ -347,6 +368,8 @@
           <li><a href="#modelfree">Model-Free Approach</a></li>
           <li><a href="#modelbased">Model-Based Approach</a></li>
           <li><a href="#comparison">Performance Analysis</a></li>
+          <li><a href="#demo">Demo</a></li>
+          <li><a href="#further">Scope for Improvement</a></li>
           <li><a href="#code">Code</a></li>
           <li><a href="#references">References</a></li>
         </ul>
