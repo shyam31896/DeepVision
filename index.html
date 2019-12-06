@@ -135,12 +135,6 @@
   </div>
 
   <div class="container">
-    <div class="container scrollspy">
-     
-    </div>
-  </div>
-
-  <div class="container">
     <div class="container scrollspy" id="modelbased">
       <div class="section">
         <h4 id="modelbased" class="center" style="color:#00838f;font-weight: lighter;">Model - Based Approach</h4>
@@ -256,27 +250,31 @@
             this approach does not generalizes well.
           </p>
         </div>
-        <div class="center" id="paramres">
-          <br>
-          <div class="container scrollspy" id="comparison">
-            <h4 id="comparison" class="center" style="color:#00838f;font-weight: lighter;">Performance Analysis</h4>
-          </div>
-          <img src="Blog/images/pres4.jpg" alt="pres4">
-          <p style="text-align: center;font-size: 14px;">Figure [13]</p>
-          <p id="para">
-            For real-world testing, we test our approaches with a real 2D image of a chair. The model-free approach 
-            constructs the shape of chair but fails to capture the specific features such as thickness. This can be 
-            attributed to the difference between the lighting and background differences between a synthetic and a 
-            real image. The model-based approach captures the overall shape of the chair but results in a noisy shape. 
-            <br><br>
-            Also, for model-based approach to give good results the base model should be very close to the output shape 
-            that we want to predict whereas the model-free approach does not have the said constraint. But, model-free 
-            approach requires a lot of computational power to predict 128*128*128 points whereas model-based approach 
-            just has to predict 15 points!
-            <br><br>
-            Life comes with trade-offs! :)
-          </p>
+      </div>
+    </div>
+    <div class="container">
+      <div class="center scrollspy" id="comparison">
+        <br>
+        <div class="container scrollspy">
+          <h4 class="center" style="color:#00838f;font-weight: lighter;">Performance Analysis</h4>
         </div>
+        <div id="comp">
+          <img src="Blog/images/pres4.jpg" alt="pres4">
+        </div>
+        <p style="text-align: center;font-size: 14px;">Figure [13]</p>
+        <p id="para">
+          For real-world testing, we test our approaches with a real 2D image of a chair. The model-free approach 
+          constructs the shape of chair but fails to capture the specific features such as thickness. This can be 
+          attributed to the difference between the lighting and background differences between a synthetic and a 
+          real image. The model-based approach captures the overall shape of the chair but results in a noisy shape. 
+          <br><br>
+          Also, for model-based approach to give good results the base model should be very close to the output shape 
+          that we want to predict whereas the model-free approach does not have the said constraint. But, model-free 
+          approach requires a lot of computational power to predict 128*128*128 points whereas model-based approach 
+          just has to predict 15 points!
+          <br><br>
+          Life comes with trade-offs! :)
+        </p>
       </div>
     </div>
   </div>

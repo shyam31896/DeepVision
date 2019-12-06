@@ -57,6 +57,11 @@ nav.white .logo{
   width: calc(1vw*46);
 }
 
+#comp img {
+  height: calc(1vw*25);
+  width: calc(1vw*48);
+}
+
 #paramres img{
   height: calc(1vw*25);
   width: calc(1vw*48);
